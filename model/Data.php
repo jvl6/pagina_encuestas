@@ -12,21 +12,21 @@
     }
 
     public function crearPregunta($pregUnoFk,$pregDosFk){
-        $query = "INSERT INTO pregunta VALUES(NULL,'$pregUnoFk','$pregDosFk')"
+        $query = "INSERT INTO pregunta VALUES(NULL,'$pregUnoFk','$pregDosFk')";
         $this ->con->conectar();
         $this ->con->ejecutar($query);
         $this ->con->desconectar();
     }
 
     public function crearOpcionUno($nombre,$votos){
-        $query = "INSERT INTO opcionUno VALUES(NULL,'$nombre','$votos')"
+        $query = "INSERT INTO opcionUno VALUES(NULL,'$nombre','$votos')";
         $this ->con->conectar();
         $this ->con->ejecutar($query);
         $this ->con->desconectar();
     }
 
     public function crearOpcionDos(){
-        $query = "INSERT INTO opcionDos VALUES(NULL,'$nombre','$votos')"
+        $query = "INSERT INTO opcionDos VALUES(NULL,'$nombre','$votos')";
         $this ->con->conectar();
         $this ->con->ejecutar($query);
         $this ->con->desconectar();

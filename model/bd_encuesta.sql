@@ -4,68 +4,64 @@ USE bd_encuesta;
 
 CREATE TABLE opcionUno(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre NVARCHAR(200),
-    votos INT
+    nombre NVARCHAR(200)
 );
 
 CREATE TABLE opcionDos(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre NVARCHAR(200),
-    votos INT
+    nombre NVARCHAR(200)
 );
 
 CREATE TABLE pregunta(
 	id INT PRIMARY KEY AUTO_INCREMENT,
+    opcionUno_fk INT REFERENCES opcion (id),
+    opcionDos_fk INT REFERENCES opcion (id)
+);
+
+CREATE TABLE votoUno(
+	id INT PRIMARY KEY AUTO_INCREMENT,
     opcionUno_fk INT REFERENCES opcionUno (id),
-    opcionDos_fk INT REFERENCES opcionDos (id)
+    voto INT
+);
+
+CREATE TABLE votoDos(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    opcionDos_fk INT REFERENCES opcionDos (id),
+    voto INT
 );
 
 DELIMITER //
-CREATE FUNCTION estadisticaUno (pregunta INT) RETURNS FLOAT
+CREATE PROCEDURE insertarVotoUno(idOpcionUno INT)
 BEGIN
-	DECLARE porcentajeUno FLOAT;
+	DECLARE existeVotoUno BIT;
+    SET existeVotoUno = (SELECT COUNT(*) FROM votoUno WHERE id = idOpcionUno);
     
-    DECLARE fk_opcionUno INT;
-    DECLARE fk_opcionDos INT;
-    
-	DECLARE cantUno INT;
-    DECLARE cantDos INT;
-    DECLARE total INT;
-    
-	SET fk_opcionUno = (SELECT opcionUno_fk FROM pregunta WHERE id = pregunta);
-    SET fk_opcionDos = (SELECT opcionDos_fk FROM pregunta WHERE id = pregunta);
-    
-    SET cantUno = (SELECT votos FROM opcion WHERE id = opcionUno_fk);
-    SET cantDos = (SELECT votos FROM opcion WHERE id = opcionDos_fk);
-    
-	SET total = (cantUno + cantDos);
-    SET porcentajeUno = (cantUno * 100) / total;
-    
-    RETURN porcentajeUno;
+    IF(existeVotoUno = 0) 
+    THEN
+		INSERT INTO votoUno VALUES (NULL, idOpcionUno, 1);
+	ELSE UPDATE votoUno SET voto = voto + 1 WHERE opcionUno_fk = idOpcionUno;
+	END IF;
 END //
 DELIMITER ;
 
 DELIMITER //
-CREATE FUNCTION estadisticaDos (pregunta INT) RETURNS FLOAT
+CREATE PROCEDURE insertarVotoDos(idOpcionDos INT)
 BEGIN
-	DECLARE porcentajeDos FLOAT;
+	DECLARE existeVotoDos BIT;
+    SET existeVotoDos = (SELECT COUNT(*) FROM votoDos WHERE id = idOpcionDos);
     
-    DECLARE fk_opcionUno INT;
-    DECLARE fk_opcionDos INT;
-    
-	DECLARE cantUno INT;
-    DECLARE cantDos INT;
-    DECLARE total INT;
-    
-	SET fk_opcionUno = (SELECT opcionUno_fk FROM pregunta WHERE id = pregunta);
-    SET fk_opcionDos = (SELECT opcionDos_fk FROM pregunta WHERE id = pregunta);
-    
-    SET cantUno = (SELECT votos FROM opcion WHERE id = opcionUno_fk);
-    SET cantDos = (SELECT votos FROM opcion WHERE id = opcionDos_fk);
-    
-	SET total = (cantUno + cantDos);
-    SET porcentajeDos = (cantUno * 100) / total;
-    
-    RETURN porcentajeDos;
+    IF(existeVotoDos = 0) 
+    THEN
+		INSERT INTO votoDos VALUES (NULL, idOpcionDos, 1);
+	ELSE UPDATE votoDos SET voto = voto + 1 WHERE opcionDos_fk = idOpcionDos;
+	END IF;
 END //
 DELIMITER ;
+
+INSERT INTO opcionUno VALUES (NULL, 'Chocolate');
+INSERT INTO opcionDos VALUES (NULL, 'Vainilla');
+
+INSERT INTO pregunta VALUES (NULL, 1, 1);
+
+CALL insertarVotoUno (1);
+CALL insertarVotoDos (1);
