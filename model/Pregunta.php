@@ -1,42 +1,56 @@
 <?php
 
-Class Pregunta{
-    private $id;
-    private $opcionUnoFk;
-    private $opcionDosFk;
-
-    function __construct($id, $opcionUnoFk, $opcionDosFk){
-        $this ->id            = $id;
-        $this ->opcionUnoFk   = $opcionUnoFk;
-        $this ->opcionDosFk   = $opcionDosFk;
+    Class Pregunta{
+        private $id;
+        private $opcionUno_fk;
+        private $cantUno;
+        private $porcentajeUno;
+        private $opcionDos_fk;
+        private $cantDos;
+        private $porcentajeDos;
+        private $totalVotos;
+    
+    function __construct($id, $opcionUno_fk,$cantUno,$porcentajeUno,$opcionDos_fk,$cantDos,$porcentajeDos,$totalVotos){
+        $this ->id             = $id;
+        $this ->opcionUno_fk   = $opcionUno_fk;
+        $this ->cantUno        = $cantUno;
+        $this ->porcentajeUno  = $porcentajeUno;
+        $this ->opcionDos_fk   = $opcionDos_fk;
+        $this ->cantDos        = $cantDos;
+        $this ->porcentajeDos  = $porcentajeDos;
+        $this ->totalVotos     = $totalVotos;
     }
 
-    public function getId(){
-        return $this->id;
-    }
+        public function getId(){
+            return $this->id;
+        }
  
-    public function setId($id){
-        $this->id = $id;
-        return $this;
-    }
+        public function getOpcionUno_fk(){
+            return $this->opcionUno_fk;
+        }
+
+        public function getCantUno(){
+            return $this->cantUno;
+        }
+
+        public function getPorcentajeUno(){
+             return $this->porcentajeUno;
+        }
  
-    public function getOpcionUnoFk(){
-        return $this->opcionUnoFk;
-    }
+        public function getOpcionDos_fk(){
+            return $this->opcionDos_fk;
+        }
+ 
+        public function getCantDos(){
+            return $this->cantDos;
+        }
 
-    public function setOpcionUnoFk($opcionUnoFk){
-        $this->opcionUnoFk = $opcionUnoFk;
-        return $this;
-    }
+        public function getPorcentajeDos(){
+            return $this->porcentajeDos;
+        }
 
-    public function getOpcionDosFk(){
-        return $this->opcionDosFk;
-    }
-
-    public function setOpcionDosFk($opcionDosFk){
-        $this->opcionDosFk = $opcionDosFk;
-        return $this;
-    }
-
+        public function getTotalVotos(){
+            return $this->totalVotos;
+        }
     }
 ?>

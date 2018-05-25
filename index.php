@@ -27,7 +27,7 @@
 
 <body>
     <div class="vertical-center">
-        <div class="container bg-grey text-dark rounded">
+        <div class="container bg-white text-dark rounded">
             <center><h1>Crear Encuesta</h1></center>
                 <form action="controller/crearPregunta.php" method="post">
                     <div class="form-group">
