@@ -17,21 +17,53 @@
     }
 
     public function listarPreguntas(){
-        $query = "SELECT * FROM vista_preguntas";
-
-        $listaP = array();
+        $query = "SELECT * FROM listado";
 
         $this->con->conectar();
-
         $rs = $this->con->ejecutar($query);
+        $listaP = array();
 
-        while($obj = $rs->fetch_object()){
-            array_push($listaP, $obj);
+        while($reg = $rs->fetch_array()){
+            $listaP[] = $reg;
         }
 
         $this->con->desconectar();
 
         return $listaP;
+    }
+
+    public function agregarVoto($id, $opc){
+        $queryCant;
+        $cant;
+        $query;
+
+        $this->con->conectar();
+
+        if($opc == 1){
+            $queryCant = "SELECT cantUno FROM pregunta WHERE id = $id";
+            $rsCant = $this->con->ejecutar($queryCant);
+
+            if($reg = $rsCant->fetch_array()){
+                $cant = $reg[0] + 1;
+            }
+
+            $query = "UPDATE pregunta SET cantUno = $cant WHERE id = $id";
+            $this->con->ejecutar($query);
+        }
+
+        if($opc == 2){
+            $queryCant = "SELECT cantDos FROM pregunta WHERE id = $id";
+            $rsCant = $this->con->ejecutar($queryCant);
+
+            if($reg = $rsCant->fetch_array()){
+                $cant = $reg[0] + 1;
+            }
+
+            $query = "UPDATE pregunta SET cantDos = $cant WHERE id = $id";
+            $this->con->ejecutar($query);
+        }
+
+        $this->con->desconectar();
     }
     
     }

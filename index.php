@@ -40,7 +40,7 @@
                         <input class="form-control" type="text" name="opcionDos" id="opcionDos" placeholder="Opción Dos:">                
                     </div>
                     <input class="btn btn-primary btn-lg" type="submit" value="Crear Pregunta" role="button">      
-                    <button type="button" class="btn btn-secondary btn-lg" href="/view/encuesta.php" >Probar encuestas</button>           
+                    <a href="view/encuesta.php" class="btn btn-secondary btn-lg" role="button">Probar Encuestas</a>
                 </form>
 				<br>
         </div>

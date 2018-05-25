@@ -89,3 +89,5 @@ SELECT
 FROM pregunta p
 JOIN opcion oUno ON p.opcionUno_fk = oUno.id
 JOIN opcion oDos ON p.opcionDos_fk = oDos.id;
+
+SELECT * FROM listado;
