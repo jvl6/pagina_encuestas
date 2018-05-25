@@ -2,12 +2,7 @@ CREATE DATABASE bd_encuesta;
 
 USE bd_encuesta;
 
-CREATE TABLE opcionUno(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre NVARCHAR(200)
-);
-
-CREATE TABLE opcionDos(
+CREATE TABLE opcion(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nombre NVARCHAR(200)
 );
@@ -15,53 +10,67 @@ CREATE TABLE opcionDos(
 CREATE TABLE pregunta(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     opcionUno_fk INT REFERENCES opcion (id),
-    opcionDos_fk INT REFERENCES opcion (id)
-);
-
-CREATE TABLE votoUno(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    opcionUno_fk INT REFERENCES opcionUno (id),
-    voto INT
-);
-
-CREATE TABLE votoDos(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    opcionDos_fk INT REFERENCES opcionDos (id),
-    voto INT
+    cantUno INT,
+    porcentajeUno FLOAT,
+    opcionDos_fk INT REFERENCES opcion (id),
+    cantDos INT,
+    porcentajeDos FLOAT,
+    totalVotos INT
 );
 
 DELIMITER //
-CREATE PROCEDURE insertarVotoUno(idOpcionUno INT)
+CREATE PROCEDURE insertarPregunta (opcionUno NVARCHAR(200), opcionDos NVARCHAR(200))
 BEGIN
-	DECLARE existeVotoUno BIT;
-    SET existeVotoUno = (SELECT COUNT(*) FROM votoUno WHERE id = idOpcionUno);
+	DECLARE idOpcionUno INT;
+    DECLARE idOpcionDos INT;
+    DECLARE existeOpcionUno BIT;
+    DECLARE existeOpcionDos BIT;
+    SET existeOpcionUno = (SELECT COUNT(*) FROM opcion WHERE nombre = opcionUno);
+	SET existeOpcionDos = (SELECT COUNT(*) FROM opcion WHERE nombre = opcionDos);
     
-    IF(existeVotoUno = 0) 
-    THEN
-		INSERT INTO votoUno VALUES (NULL, idOpcionUno, 1);
-	ELSE UPDATE votoUno SET voto = voto + 1 WHERE opcionUno_fk = idOpcionUno;
-	END IF;
+    IF(existeOpcionUno = 0) THEN 
+		INSERT INTO opcion VALUES (NULL, opcionUno);
+    END IF;
+    
+    IF(existeOpcionDos = 0) THEN 
+		INSERT INTO opcion VALUES (NULL, opcionDos);
+    END IF;
+    
+	SET idOpcionUno = (SELECT id FROM opcion WHERE nombre = opcionUno);
+	SET idOpcionDos = (SELECT id FROM opcion WHERE nombre = opcionDos);
+    
+    INSERT INTO pregunta VALUES (NULL, idOpcionUno, 0, 0, idOpcionDos, 0, 0, 0);
 END //
-DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE insertarVotoDos(idOpcionDos INT)
+CREATE TRIGGER calcular BEFORE UPDATE ON pregunta 
+FOR EACH ROW
 BEGIN
-	DECLARE existeVotoDos BIT;
-    SET existeVotoDos = (SELECT COUNT(*) FROM votoDos WHERE id = idOpcionDos);
+	DECLARE cantUnoC INT;
+    DECLARE cantDosC INT;
+    DECLARE porcentajeUnoC FLOAT;
+    DECLARE porcentajeDosC FLOAT;
+	DECLARE totalC INT;
     
-    IF(existeVotoDos = 0) 
-    THEN
-		INSERT INTO votoDos VALUES (NULL, idOpcionDos, 1);
-	ELSE UPDATE votoDos SET voto = voto + 1 WHERE opcionDos_fk = idOpcionDos;
-	END IF;
+	SET cantUnoC = (SELECT NEW.cantUno);
+    SET cantDosC = (SELECT NEW.cantDos);
+	SET totalC = cantUnoC + cantDosC;
+    SET porcentajeUnoC = (cantUnoC * 100) / totalC;
+    SET porcentajeDosC = (cantDosC * 100) / totalC;
+    
+    SET NEW.totalVotos = totalC;
+    SET NEW.porcentajeUno = porcentajeUnoC;
+    SET NEW.porcentajeDos = porcentajeDosC;
 END //
 DELIMITER ;
 
-INSERT INTO opcionUno VALUES (NULL, 'Chocolate');
-INSERT INTO opcionDos VALUES (NULL, 'Vainilla');
+DROP TRIGGER calcular;
+DROP TRIGGER actualizar;
 
-INSERT INTO pregunta VALUES (NULL, 1, 1);
+DROP DATABASE bd_encuesta;
 
-CALL insertarVotoUno (1);
-CALL insertarVotoDos (1);
+CALL insertarPregunta ('Chocolate', 'Vainilla');
+
+SELECT * FROM pregunta;
+
+UPDATE pregunta SET cantDos = 1 WHERE id = 1;
