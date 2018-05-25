@@ -12,7 +12,7 @@
     }
 
     public function crearPregunta($opcionUno,$opcionDos){
-        $query = "CALL insertarPregunta ($opcionUno, $opcionDos";
+        $query = "CALL insertarPregunta ('$opcionUno', '$opcionDos')";
         $this ->con->conectar();
         $this ->con->ejecutar($query);
         $this ->con->desconectar();
