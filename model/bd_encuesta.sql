@@ -64,13 +64,16 @@ BEGIN
 END //
 DELIMITER ;
 
-DROP TRIGGER calcular;
-DROP TRIGGER actualizar;
-
-DROP DATABASE bd_encuesta;
-
-CALL insertarPregunta ('Chocolate', 'Vainilla');
-
-SELECT * FROM pregunta;
-
-UPDATE pregunta SET cantDos = 1 WHERE id = 1;
+CREATE VIEW listado AS
+SELECT
+	p.id,
+    oUno.nombre AS 'OpcionUno',
+    p.cantUno,
+    p.porcentajeUno,
+    oDos.nombre AS 'OpcionDos',
+    p.cantDos,
+    p.porcentajeDos,
+    p.totalVotos
+FROM pregunta p
+JOIN opcion oUno ON p.opcionUno_fk = oUno.id
+JOIN opcion oDos ON p.opcionDos_fk = oDos.id;

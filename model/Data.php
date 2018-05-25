@@ -11,8 +11,8 @@
         $this ->con = new Conexion("bd_encuesta");
     }
 
-    public function crearPregunta($pregUnoFk,$pregDosFk){
-        $query = "INSERT INTO pregunta VALUES(NULL,'$pregUnoFk','$pregDosFk')";
+    public function crearPregunta($opcionUno,$opcionDos){
+        $query = "CALL insertarPregunta ($opcionUno, $opcionDos";
         $this ->con->conectar();
         $this ->con->ejecutar($query);
         $this ->con->desconectar();
