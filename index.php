@@ -28,7 +28,9 @@
 <body>
     <div class="vertical-center">
         <div class="container bg-white text-dark rounded">
+		<br>
             <center><h1>Crear Encuesta</h1></center>
+			<br>
                 <form action="controller/crearPregunta.php" method="post">
                     <div class="form-group">
                         <input class="form-control" type="text" name="opcionUno" id="opcionUno" placeholder="Opción Uno:">                
@@ -37,10 +39,10 @@
                     <div class="form-group">
                         <input class="form-control" type="text" name="opcionDos" id="opcionDos" placeholder="Opción Dos:">                
                     </div>
-                    <input class="btn btn-primary" type="submit" value="Crear Pregunta" role="button">            
+                    <input class="btn btn-primary btn-lg" type="submit" value="Crear Pregunta" role="button">      
+                    <button type="button" class="btn btn-secondary btn-lg" href="/view/encuesta.php" >Probar encuestas</button>           
                 </form>
-                <br>
-                <a href="/view/encuesta.php">Probar encuesta</a>
+				<br>
         </div>
     </div>
 
