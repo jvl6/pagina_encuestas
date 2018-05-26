@@ -7,9 +7,15 @@
     <title>Encuesta</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-image: url("../res/img/laptop.jpg");
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container bg-white rounded">
         <h1>Encuesta</h1>
         <a href="resultado.php">Ver resultados</a>
         <a href="../index.php">Volver</a>
@@ -37,6 +43,7 @@
                         echo "<input class='btn btn-dark' type='submit' value='".$v[4]."' role='button'>";
                     echo "</div>";
                 echo "</form>";
+                echo "<br>";
             }
         ?>
     </div>
