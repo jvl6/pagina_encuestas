@@ -78,16 +78,4 @@ FROM pregunta p
 JOIN opcion oUno ON p.opcionUno_fk = oUno.id
 JOIN opcion oDos ON p.opcionDos_fk = oDos.id;
 
-CREATE VIEW vista_preguntas AS
-SELECT
-	p.id,
-    oUno.nombre AS 'OpcionUno',
-    p.cantUno,
-    oDos.nombre AS 'OpcionDos',
-    p.cantDos,
-    p.totalVotos
-FROM pregunta p
-JOIN opcion oUno ON p.opcionUno_fk = oUno.id
-JOIN opcion oDos ON p.opcionDos_fk = oDos.id;
-
 SELECT * FROM listado;

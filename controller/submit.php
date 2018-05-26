@@ -13,3 +13,5 @@
     echo $men;
     unset($_SESSION["mensaje"]);
 ?>
+
+<a href="../view/encuesta.php">Volver</a>

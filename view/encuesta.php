@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='shortcut icon' type='image/x-icon' href='res/img/favicon.ico' />
     <title>Encuesta</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -18,7 +19,9 @@
     <div class="container bg-white rounded">
         <h1>Encuesta</h1>
         <a href="resultado.php">Ver resultados</a>
+        <br>
         <a href="../index.php">Volver</a>
+        <br>
         <?php
             require_once("../model/Data.php");
 
@@ -27,22 +30,24 @@
             $vista = $d->listarPreguntas();
 
             foreach($vista as $v){
-                echo "<h5>Pregunta ".$v[0]."</h5>";
-                echo "<form action='../controller/submit.php' method='post'>";
+                echo "<center><h5>Pregunta ".$v[0]."</h5></center>";
+                echo "<center><form action='../controller/submit.php' method='post'>";
                     echo "<div class='form-group'>";
                         echo "<input type=hidden name='id' value='".$v[0]."'>";
                         echo "<input type=hidden name='opc' value = '1'>";
                         echo "<input class='btn btn-dark' type='submit' value='".$v[1]."' role='button'>";
                     echo "</div>";
                 echo "</form>";
+                echo "</center>";
 
-                echo "<form action='../controller/submit.php' method='post'>";
+                echo "<center><form action='../controller/submit.php' method='post'>";
                     echo "<div class='form-group'>";
                         echo "<input type=hidden name='id' value='".$v[0]."'>";
                         echo "<input type=hidden name='opc' value = '2'>";
                         echo "<input class='btn btn-dark' type='submit' value='".$v[4]."' role='button'>";
                     echo "</div>";
                 echo "</form>";
+                echo "</center>";
                 echo "<br>";
             }
         ?>

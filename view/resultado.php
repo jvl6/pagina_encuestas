@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='shortcut icon' type='image/x-icon' href='res/img/favicon.ico' />
     <title>Resultados</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -23,8 +24,9 @@
 
             $resultados = $dat->listarPreguntas();
 
-            echo "<h2>Resultados</h2>";
-            echo "<a href='../index.php'>Volver</a>";
+            echo "<h1>Resultados</h1>";
+            echo "<a href='encuesta.php'>Volver</a>";
+            echo "<br>";
             foreach($resultados as $res){
                 echo "<table class='table table-striped'>";
                     echo "<h3> Pregunta ".$res[0]."</h3>";
